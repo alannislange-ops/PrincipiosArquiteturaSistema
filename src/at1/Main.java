@@ -30,13 +30,20 @@ public class Main {
                     listarDispositivos();
                     break;
                 case 5:
-                    executarPorCodigo(Dispositivo::ligar);
+                    Dispositivo dispositivo = buscarObjeto(listaDispositivos);
+		
+		            if(dispositivo == null){
+			            return;
+		            }
+                    
+		            dispositivo.ligar();
+
                     break;
                 case 6:
-                    executarPorCodigo(Dispositivo::desligar);
+                    
                     break;
                 case 7:
-                    executarPorCodigo(Dispositivo::exibirDetalhes);
+                    
                     break;
                 case 9:
                     exibirRelatorio();
@@ -46,6 +53,21 @@ public class Main {
             }
         } while (opcao != 8);
     }
+
+    public static Dispositivo buscarObjeto(ArrayList<Dispositivo> listaDispositivos){
+
+        String codigoBusca = lerTexto("Informe o código do Dispositivo: ");
+
+		for(Dispositivo dispositivo : listaDispositivos){
+			
+			if(dispositivo.getCodigo().contains(codigoBusca)){
+				return dispositivo;
+			}
+		}
+        
+		return null;
+		
+	}
 
     private static void exibirMenu() {
         System.out.println("");
@@ -129,27 +151,27 @@ public class Main {
         }
     }
 
-    private static void executarPorCodigo(Consumer<Dispositivo> acao) {
-        System.out.println("");
-        System.out.println("==========================================");
-        String busca = lerTexto("Informe o código do Dispositivo: ");
-        boolean encontrou = false;
+    // private static void executarPorCodigo(Consumer<Dispositivo> acao) {
+    //     System.out.println("");
+    //     System.out.println("==========================================");
+    //     String busca = lerTexto("Informe o código do Dispositivo: ");
+    //     boolean encontrou = false;
 
-        for (Dispositivo dispositivo : listaDispositivos) {
-            if (dispositivo.getCodigo().contains(busca)) {
-                acao.accept(dispositivo);
-                encontrou = true;
-            }
-        }
+    //     for (Dispositivo dispositivo : listaDispositivos) {
+    //         if (dispositivo.getCodigo().contains(busca)) {
+    //             acao.accept(dispositivo);
+    //             encontrou = true;
+    //         }
+    //     }
 
-        if (!encontrou) {
-            System.out.println("");
-            System.out.println("==========================================");
-            System.out.println("Objeto não encontrado.");
-            System.out.println("==========================================");
-            System.out.println("");
-        }
-    }
+    //     if (!encontrou) {
+    //         System.out.println("");
+    //         System.out.println("==========================================");
+    //         System.out.println("Objeto não encontrado.");
+    //         System.out.println("==========================================");
+    //         System.out.println("");
+    //     }
+    // }
 
     private static void exibirRelatorio() {
         int totalDispositivos = listaDispositivos.size();
