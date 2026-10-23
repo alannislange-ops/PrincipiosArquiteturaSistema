@@ -1,7 +1,6 @@
 package at1;
 
 import java.util.ArrayList;
-import java.util.function.Consumer;
 import java.util.Scanner;
 
 public class Main {
@@ -9,7 +8,7 @@ public class Main {
     private static final Scanner sc = new Scanner(System.in);
     private static final ArrayList<Dispositivo> listaDispositivos = new ArrayList<>();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DispositivoNull {
         int opcao;
 
         do {
@@ -19,55 +18,75 @@ public class Main {
             switch (opcao) {
                 case 1:
                     cadastrarComputador();
+
                     break;
                 case 2:
                     cadastrarImpressora();
+
                     break;
                 case 3:
                     cadastrarRoteador();
+
                     break;
                 case 4:
                     listarDispositivos();
+
                     break;
                 case 5:
-                    Dispositivo dispositivo = buscarObjeto(listaDispositivos);
-		
-		            if(dispositivo == null){
-			            return;
-		            }
-                    
-		            dispositivo.ligar();
+                    try {
+                        Dispositivo dispositivo = buscarObjeto(listaDispositivos);
+                        dispositivo.ligar();
+
+                    } catch (NullPointerException e) {
+                        System.out.println("Erro: Dispositivo não encontrado");
+
+                    }
 
                     break;
                 case 6:
-                    
+                    try {
+                        Dispositivo dispositivo = buscarObjeto(listaDispositivos);
+                        dispositivo.desligar();
+
+                    } catch (NullPointerException e) {
+                        System.out.println("Erro: Dispositivo não encontrado");
+
+                    }
+
                     break;
                 case 7:
-                    
+                    try {
+                        Dispositivo dispositivo = buscarObjeto(listaDispositivos);
+                        dispositivo.exibirDetalhes();
+
+                    } catch (NullPointerException e) {
+                        System.out.println("Erro: Dispositivo não encontrado");
+
+                    }
+
                     break;
                 case 9:
                     exibirRelatorio();
-                    break;
-                default:
+
                     break;
             }
         } while (opcao != 8);
     }
 
-    public static Dispositivo buscarObjeto(ArrayList<Dispositivo> listaDispositivos){
+    public static Dispositivo buscarObjeto(ArrayList<Dispositivo> listaDispositivos) {
 
         String codigoBusca = lerTexto("Informe o código do Dispositivo: ");
 
-		for(Dispositivo dispositivo : listaDispositivos){
-			
-			if(dispositivo.getCodigo().contains(codigoBusca)){
-				return dispositivo;
-			}
-		}
-        
-		return null;
-		
-	}
+        for (Dispositivo dispositivo : listaDispositivos) {
+
+            if (dispositivo.getCodigo().equals(codigoBusca)) {
+                return dispositivo;
+            }
+        }
+
+        return null;
+
+    }
 
     private static void exibirMenu() {
         System.out.println("");
@@ -152,25 +171,25 @@ public class Main {
     }
 
     // private static void executarPorCodigo(Consumer<Dispositivo> acao) {
-    //     System.out.println("");
-    //     System.out.println("==========================================");
-    //     String busca = lerTexto("Informe o código do Dispositivo: ");
-    //     boolean encontrou = false;
+    // System.out.println("");
+    // System.out.println("==========================================");
+    // String busca = lerTexto("Informe o código do Dispositivo: ");
+    // boolean encontrou = false;
 
-    //     for (Dispositivo dispositivo : listaDispositivos) {
-    //         if (dispositivo.getCodigo().contains(busca)) {
-    //             acao.accept(dispositivo);
-    //             encontrou = true;
-    //         }
-    //     }
+    // for (Dispositivo dispositivo : listaDispositivos) {
+    // if (dispositivo.getCodigo().contains(busca)) {
+    // acao.accept(dispositivo);
+    // encontrou = true;
+    // }
+    // }
 
-    //     if (!encontrou) {
-    //         System.out.println("");
-    //         System.out.println("==========================================");
-    //         System.out.println("Objeto não encontrado.");
-    //         System.out.println("==========================================");
-    //         System.out.println("");
-    //     }
+    // if (!encontrou) {
+    // System.out.println("");
+    // System.out.println("==========================================");
+    // System.out.println("Objeto não encontrado.");
+    // System.out.println("==========================================");
+    // System.out.println("");
+    // }
     // }
 
     private static void exibirRelatorio() {
