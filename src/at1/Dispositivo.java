@@ -12,8 +12,16 @@ public abstract class Dispositivo implements interfaceOperavel {
         this.fabricante = fabricante;
         this.codigo = codigo;
     }
+    public void exibirDetalhes() {
+        System.out.println("Nome: " + getNome());
+        System.out.println("Fabricante: " + getFabricante());
+        System.out.println("Código: " + getCodigo());
+        exibirStatus();
+    }
 
-    public abstract void exibirDetalhes();
+    public void exibirStatus(){
+        System.out.println(isLigado() ? getNome()+" ligado" : getNome()+"Desligado");
+    }
 
     public String getNome() {
         return nome;
@@ -39,12 +47,23 @@ public abstract class Dispositivo implements interfaceOperavel {
         this.codigo = codigo;
     }
 
+    public void ligar() {
+        setLigado(true);
+        System.out.println("Ligando dispositivo...");
+    }
+
+    public void desligar() {
+        setLigado(false);
+        System.out.println("Desligando dispositivo...");
+    }
+
     public boolean isLigado() {
         return ligado;
     }
 
-    protected void setLigado(boolean ligado) {
+    public void setLigado(boolean ligado) {
         this.ligado = ligado;
     }
+    
 
 }

@@ -12,41 +12,12 @@ public class Computador extends Dispositivo {
         this.sistemaOperacional = sistemaOperacional;
     }
 
-    @Override
-    public void ligar() {
-        if (isLigado()) {
-            System.out.println("Já está ligado!");
-            return;
-        }
-        setLigado(true);
-        System.out.println("Ligando Computador...");
-    }
-
-    @Override
-    public void desligar() {
-        if (!isLigado()) {
-            System.out.println("Já está desligado!");
-            return;
-        }
-        setLigado(false);
-        System.out.println("Desligando Computador...");
-    }
-
-    @Override
-    public void exibirStatus() {
-        System.out.println(isLigado() ? "Computador ligado" : "Computador desligado");
-    }
-
-    @Override
+    @Override 
     public void exibirDetalhes() {
         System.out.println("===============COMPUTADOR===============");
+        super.exibirDetalhes();
         System.out.println("Quantidade de memória RAM: " + quantidadeRam);
         System.out.println("Sistema operacional: " + sistemaOperacional);
-        System.out.println("Nome: " + getNome());
-        System.out.println("Fabricante: " + getFabricante());
-        System.out.println("Código: " + getCodigo());
-        exibirStatus();
-        System.out.println("========================================");
     }
 
     public String getQuantidadeRam() {
@@ -64,5 +35,6 @@ public class Computador extends Dispositivo {
     public void setSistemaOperacional(String sistemaOperacional) {
         this.sistemaOperacional = sistemaOperacional;
     }
+
 
 }

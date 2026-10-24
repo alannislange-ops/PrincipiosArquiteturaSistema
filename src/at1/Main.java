@@ -8,100 +8,85 @@ public class Main {
     private static final Scanner sc = new Scanner(System.in);
     private static final ArrayList<Dispositivo> listaDispositivos = new ArrayList<>();
 
-    public static void main(String[] args) throws DispositivoNull {
+    public static void main(String[] args) throws DispositivoNull, AcaoDuplicadaExeption {
+        
         int opcao;
 
         do {
-            exibirMenu();
+            ExibirMenu.exibirMenu();
             opcao = sc.nextInt();
 
             switch (opcao) {
                 case 1:
                     cadastrarComputador();
-
                     break;
                 case 2:
                     cadastrarImpressora();
-
                     break;
                 case 3:
                     cadastrarRoteador();
-
                     break;
                 case 4:
                     listarDispositivos();
-
                     break;
+
                 case 5:
                     try {
                         Dispositivo dispositivo = buscarObjeto(listaDispositivos);
-                        dispositivo.ligar();
 
+                        if(dispositivo.isLigado()){
+                            throw new AcaoDuplicadaExeption("Dispositivo já estava ligado");
+                        }
+
+                        dispositivo.ligar();
                     } catch (NullPointerException e) {
                         System.out.println("Erro: Dispositivo não encontrado");
-
+                    } catch (AcaoDuplicadaExeption e){
+                        System.out.println(e);
                     }
-
                     break;
+
                 case 6:
                     try {
                         Dispositivo dispositivo = buscarObjeto(listaDispositivos);
-                        dispositivo.desligar();
 
+                        if(dispositivo.isLigado() == false){
+                            throw new AcaoDuplicadaExeption("Dispositivo já estava desligado");
+                        }
+
+                        dispositivo.desligar();
                     } catch (NullPointerException e) {
                         System.out.println("Erro: Dispositivo não encontrado");
-
+                    } catch (AcaoDuplicadaExeption e){
+                        System.out.println(e);
                     }
-
                     break;
+
                 case 7:
                     try {
                         Dispositivo dispositivo = buscarObjeto(listaDispositivos);
                         dispositivo.exibirDetalhes();
-
                     } catch (NullPointerException e) {
                         System.out.println("Erro: Dispositivo não encontrado");
-
                     }
-
                     break;
-                case 9:
-                    exibirRelatorio();
+                case 8:
+                    ExibirRelatorio.exibirRelatorio(listaDispositivos);
 
                     break;
             }
-        } while (opcao != 8);
+        } while (opcao < 8);
     }
 
     public static Dispositivo buscarObjeto(ArrayList<Dispositivo> listaDispositivos) {
-
         String codigoBusca = lerTexto("Informe o código do Dispositivo: ");
 
         for (Dispositivo dispositivo : listaDispositivos) {
-
             if (dispositivo.getCodigo().equals(codigoBusca)) {
                 return dispositivo;
             }
         }
-
         return null;
-
-    }
-
-    private static void exibirMenu() {
-        System.out.println("");
-        System.out.println("==================MENU===================");
-        System.out.println("1 - Cadastrar Computador");
-        System.out.println("2 - Cadastrar Impressora");
-        System.out.println("3 - Cadastrar Roteador");
-        System.out.println("4 - Listar Dispositivos");
-        System.out.println("5 - Ligar Dispositivo");
-        System.out.println("6 - Desligar Dispositivo");
-        System.out.println("7 - Exibir Detalhes de um Dispositivo");
-        System.out.println("8 - Sair");
-        System.out.println("9 - Relatório geral");
-        System.out.println("==========================================");
-        System.out.println("");
     }
 
     private static String lerTexto(String mensagem) {
@@ -129,12 +114,19 @@ public class Main {
         String nome = lerTexto("Nome: ");
         String fabricante = lerTexto("Fabricante: ");
         String codigo = lerTexto("Código: ");
-        String tipo = lerTexto("Tipo de impressão: (jato ou laser) ");
+        String tipoImpressora = lerTexto("Tipo de impressão: \n1 = jato ou 2 = laser) ");
         String velocidadeImpressao = lerTexto("Velocidade de impressão: ");
         System.out.println("==========================================");
         System.out.println("");
 
-        listaDispositivos.add(new Impressora(nome, fabricante, codigo, velocidadeImpressao, tipo));
+        if(tipoImpressora == "1"){
+            listaDispositivos.add(new ImpressoraJato(nome, fabricante, codigo, velocidadeImpressao,tipoImpressora));
+
+        }else if(tipoImpressora == "2"){
+            listaDispositivos.add(new ImpressoraLaser(nome, fabricante, codigo, velocidadeImpressao, tipoImpressora));
+        }
+
+        
     }
 
     private static void cadastrarRoteador() {
@@ -168,74 +160,6 @@ public class Main {
         for (Dispositivo dispositivo : listaDispositivos) {
             dispositivo.exibirDetalhes();
         }
-    }
-
-    // private static void executarPorCodigo(Consumer<Dispositivo> acao) {
-    // System.out.println("");
-    // System.out.println("==========================================");
-    // String busca = lerTexto("Informe o código do Dispositivo: ");
-    // boolean encontrou = false;
-
-    // for (Dispositivo dispositivo : listaDispositivos) {
-    // if (dispositivo.getCodigo().contains(busca)) {
-    // acao.accept(dispositivo);
-    // encontrou = true;
-    // }
-    // }
-
-    // if (!encontrou) {
-    // System.out.println("");
-    // System.out.println("==========================================");
-    // System.out.println("Objeto não encontrado.");
-    // System.out.println("==========================================");
-    // System.out.println("");
-    // }
-    // }
-
-    private static void exibirRelatorio() {
-        int totalDispositivos = listaDispositivos.size();
-        int computadores = 0;
-        int impressoras = 0;
-        int roteadores = 0;
-
-        if (totalDispositivos == 0) {
-            System.out.println("");
-            System.out.println("==========================================");
-            System.out.println("Nenhum dispositivo cadastrado.");
-            System.out.println("==========================================");
-            System.out.println("");
-            return;
-        }
-
-        for (Dispositivo dispositivo : listaDispositivos) {
-            if (dispositivo instanceof Computador) {
-                computadores++;
-            }
-            if (dispositivo instanceof Impressora) {
-                impressoras++;
-            }
-            if (dispositivo instanceof Roteador) {
-                roteadores++;
-            }
-        }
-
-        double percentualComputadores = computadores * 100.0 / totalDispositivos;
-        double percentualImpressoras = impressoras * 100.0 / totalDispositivos;
-        double percentualRoteadores = roteadores * 100.0 / totalDispositivos;
-
-        System.out.println("");
-        System.out.println("================RELATÓRIO================");
-        System.out.println("Total de dispositivos cadastrados: " + totalDispositivos);
-        System.out.println("Total de computadores cadastrados: " + computadores);
-        System.out.println("Total de impressoras cadastradas: " + impressoras);
-        System.out.println("Total de roteadores cadastrados: " + roteadores);
-        System.out.println("==========================================");
-        System.out.println("Percentual que cada categoria representa do total");
-        System.out.printf("Computador: % ", percentualComputadores);
-        System.out.printf("Impressora: % ", percentualImpressoras);
-        System.out.printf("Roteador: % ", percentualRoteadores);
-        System.out.println("==========================================");
-        System.out.println("");
     }
 
 }
