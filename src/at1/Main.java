@@ -3,10 +3,9 @@ package at1;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Main {
+import at1.Controller.DispositivoController;
 
-    private static final Scanner sc = new Scanner(System.in);
-    private static final ArrayList<Dispositivo> listaDispositivos = new ArrayList<>();
+public class Main {
 
     public static void main(String[] args) throws DispositivoNull, AcaoDuplicadaExeption {
         
@@ -14,20 +13,19 @@ public class Main {
 
         do {
             ExibirMenu.exibirMenu();
-            opcao = sc.nextInt();
 
             switch (opcao) {
                 case 1:
-                    cadastrarComputador();
+                    DispositivoController.cadastrarComputador();
                     break;
                 case 2:
-                    cadastrarImpressora();
+                    DispositivoController.cadastrarImpressora();
                     break;
                 case 3:
-                    cadastrarRoteador();
+                    DispositivoController.cadastrarRoteador();
                     break;
                 case 4:
-                    listarDispositivos();
+                    DispositivoController.listarDispositivos();
                     break;
 
                 case 5:
@@ -76,90 +74,6 @@ public class Main {
                     break;
             }
         } while (opcao < 8);
-    }
-
-    public static Dispositivo buscarObjeto(ArrayList<Dispositivo> listaDispositivos) {
-        String codigoBusca = lerTexto("Informe o código do Dispositivo: ");
-
-        for (Dispositivo dispositivo : listaDispositivos) {
-            if (dispositivo.getCodigo().equals(codigoBusca)) {
-                return dispositivo;
-            }
-        }
-        return null;
-    }
-
-    private static String lerTexto(String mensagem) {
-        System.out.println(mensagem);
-        return sc.next();
-    }
-
-    private static void cadastrarComputador() {
-        System.out.println("");
-        System.out.println("==========================================");
-        String nome = lerTexto("Nome: ");
-        String fabricante = lerTexto("Fabricante: ");
-        String codigo = lerTexto("Código: ");
-        String quantidadeRam = lerTexto("Memória RAM: ");
-        String sistemaOperacional = lerTexto("Sistema operacional: ");
-        System.out.println("==========================================");
-        System.out.println("");
-
-        listaDispositivos.add(new Computador(nome, fabricante, codigo, quantidadeRam, sistemaOperacional));
-    }
-
-    private static void cadastrarImpressora() {
-        System.out.println("");
-        System.out.println("==========================================");
-        String nome = lerTexto("Nome: ");
-        String fabricante = lerTexto("Fabricante: ");
-        String codigo = lerTexto("Código: ");
-        String tipoImpressora = lerTexto("Tipo de impressão: \n1 = jato ou 2 = laser) ");
-        String velocidadeImpressao = lerTexto("Velocidade de impressão: ");
-        System.out.println("==========================================");
-        System.out.println("");
-
-        if(tipoImpressora == "1"){
-            listaDispositivos.add(new ImpressoraJato(nome, fabricante, codigo, velocidadeImpressao,tipoImpressora));
-
-        }else if(tipoImpressora == "2"){
-            listaDispositivos.add(new ImpressoraLaser(nome, fabricante, codigo, velocidadeImpressao, tipoImpressora));
-        }
-
-        
-    }
-
-    private static void cadastrarRoteador() {
-        System.out.println("");
-        System.out.println("==========================================");
-        String nome = lerTexto("Nome: ");
-        String fabricante = lerTexto("Fabricante: ");
-        String codigo = lerTexto("Código: ");
-
-        System.out.println("Quantidade de portas: ");
-        int portas = sc.nextInt();
-
-        if (portas < 0) {
-            System.out.println("");
-            System.out.println("==========================================");
-            System.out.println("Este roteador não será cadastrado pois porta não pode ser negativa!");
-            System.out.println("Tente novamente com valor positivo!");
-            System.out.println("==========================================");
-            System.out.println("");
-            return;
-        }
-
-        String velocidadeRede = lerTexto("Velocidade da rede: ");
-        System.out.println("==========================================");
-        System.out.println("");
-
-        listaDispositivos.add(new Roteador(nome, fabricante, codigo, portas, velocidadeRede));
-    }
-
-    private static void listarDispositivos() {
-        for (Dispositivo dispositivo : listaDispositivos) {
-            dispositivo.exibirDetalhes();
-        }
     }
 
 }
