@@ -3,11 +3,7 @@ package at1.Controller;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import at1.Computador;
-import at1.Dispositivo;
-import at1.ImpressoraJato;
-import at1.ImpressoraLaser;
-import at1.Roteador;
+import at1.*;
 
 public class DispositivoController {
     private static final Scanner sc = new Scanner(System.in);
@@ -18,7 +14,7 @@ public class DispositivoController {
         return sc.next();
     }
 
-    public static Dispositivo buscarObjeto(ArrayList<Dispositivo> listaDispositivos) {
+    public static Dispositivo buscarObjeto() {
         String codigoBusca = lerTexto("Informe o código do Dispositivo: ");
 
         for (Dispositivo dispositivo : listaDispositivos) {
@@ -67,6 +63,8 @@ public class DispositivoController {
         }else if(tipoImpressora == "2"){
             listaDispositivos.add(new ImpressoraLaser(nome, fabricante, codigo, velocidadeImpressao, tipoImpressora));
         }
+
+        return ;
 
         
     }

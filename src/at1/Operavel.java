@@ -1,6 +1,6 @@
 package at1;
 
-public interface interfaceOperavel {
+public interface Operavel {
 
     void ligar();
 

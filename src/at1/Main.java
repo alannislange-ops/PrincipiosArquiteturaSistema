@@ -7,12 +7,16 @@ import at1.Controller.DispositivoController;
 
 public class Main {
 
+    private static final ArrayList<Dispositivo> listaDispositivos = new ArrayList<>();
+    
     public static void main(String[] args) throws DispositivoNull, AcaoDuplicadaExeption {
         
-        int opcao;
+        int opcao = 0;
+        Scanner sc = new Scanner(System.in);
 
         do {
             ExibirMenu.exibirMenu();
+            opcao = sc.nextInt();
 
             switch (opcao) {
                 case 1:
@@ -30,7 +34,7 @@ public class Main {
 
                 case 5:
                     try {
-                        Dispositivo dispositivo = buscarObjeto(listaDispositivos);
+                        Dispositivo dispositivo = DispositivoController.buscarObjeto();
 
                         if(dispositivo.isLigado()){
                             throw new AcaoDuplicadaExeption("Dispositivo já estava ligado");
@@ -46,7 +50,7 @@ public class Main {
 
                 case 6:
                     try {
-                        Dispositivo dispositivo = buscarObjeto(listaDispositivos);
+                        Dispositivo dispositivo = DispositivoController.buscarObjeto();
 
                         if(dispositivo.isLigado() == false){
                             throw new AcaoDuplicadaExeption("Dispositivo já estava desligado");
@@ -62,7 +66,7 @@ public class Main {
 
                 case 7:
                     try {
-                        Dispositivo dispositivo = buscarObjeto(listaDispositivos);
+                        Dispositivo dispositivo = DispositivoController.buscarObjeto();
                         dispositivo.exibirDetalhes();
                     } catch (NullPointerException e) {
                         System.out.println("Erro: Dispositivo não encontrado");

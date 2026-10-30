@@ -12,8 +12,8 @@ public class ExibirMenu {
         System.out.println("5 - Ligar Dispositivo");
         System.out.println("6 - Desligar Dispositivo");
         System.out.println("7 - Exibir Detalhes de um Dispositivo");
-        System.out.println("8 - Sair");
-        System.out.println("9 - Relatório geral");
+        System.out.println("8 - Relatório geral");
+        System.out.println("9 - Sair");
         System.out.println("==========================================");
         System.out.println("");
     }

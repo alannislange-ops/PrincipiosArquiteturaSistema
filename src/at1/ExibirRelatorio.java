@@ -33,9 +33,9 @@ public class ExibirRelatorio {
         System.out.println("Total de roteadores cadastrados: " + roteadores);
         System.out.println("==========================================");
         System.out.println("Percentual que cada categoria representa do total");
-        System.out.printf("Computador: % ", percentualComputadores);
-        System.out.printf("Impressora: % ", percentualImpressoras);
-        System.out.printf("Roteador: % ", percentualRoteadores);
+        System.out.printf("Computador: % "+ percentualComputadores);
+        System.out.printf("Impressora: % "+ percentualImpressoras);
+        System.out.printf("Roteador: % "+ percentualRoteadores);
         System.out.println("==========================================");
         System.out.println("");
     }

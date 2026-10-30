@@ -1,6 +1,6 @@
 package at1;
 
-public abstract class Dispositivo implements interfaceOperavel {
+public abstract class Dispositivo implements Operavel {
 
     private String nome;
     private String fabricante;
