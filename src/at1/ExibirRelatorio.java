@@ -1,9 +1,9 @@
 package at1;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class ExibirRelatorio {
-    public static void exibirRelatorio(ArrayList<Dispositivo> listaDispositivos) {
+    public static void exibirRelatorio(List<Dispositivo> listaDispositivos) {
         int totalDispositivos = listaDispositivos.size();
         int computadores = 0;
         int impressoras = 0;
@@ -33,9 +33,9 @@ public class ExibirRelatorio {
         System.out.println("Total de roteadores cadastrados: " + roteadores);
         System.out.println("==========================================");
         System.out.println("Percentual que cada categoria representa do total");
-        System.out.printf("Computador: % "+ percentualComputadores);
-        System.out.printf("Impressora: % "+ percentualImpressoras);
-        System.out.printf("Roteador: % "+ percentualRoteadores);
+        System.out.println("Computador: % "+ percentualComputadores);
+        System.out.println("Impressora: % "+ percentualImpressoras);
+        System.out.println("Roteador: % "+ percentualRoteadores);
         System.out.println("==========================================");
         System.out.println("");
     }

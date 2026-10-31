@@ -1,15 +1,12 @@
 package at1;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import at1.Controller.DispositivoController;
 
 public class Main {
-
-    private static final ArrayList<Dispositivo> listaDispositivos = new ArrayList<>();
-    
-    public static void main(String[] args) throws DispositivoNull, AcaoDuplicadaExeption {
+    public static void main(String[] args) throws DispositivoNullExeption, AcaoDuplicadaExeption {
         
         int opcao = 0;
         Scanner sc = new Scanner(System.in);
@@ -22,12 +19,15 @@ public class Main {
                 case 1:
                     DispositivoController.cadastrarComputador();
                     break;
+
                 case 2:
                     DispositivoController.cadastrarImpressora();
                     break;
+
                 case 3:
                     DispositivoController.cadastrarRoteador();
                     break;
+
                 case 4:
                     DispositivoController.listarDispositivos();
                     break;
@@ -72,12 +72,14 @@ public class Main {
                         System.out.println("Erro: Dispositivo não encontrado");
                     }
                     break;
+
                 case 8:
-                    ExibirRelatorio.exibirRelatorio(listaDispositivos);
+                    List<Dispositivo> dispositivos =  DispositivoController.listaDispositivos;
+                    ExibirRelatorio.exibirRelatorio(dispositivos);
 
                     break;
             }
-        } while (opcao < 8);
+        } while (opcao < 9);
     }
 
 }

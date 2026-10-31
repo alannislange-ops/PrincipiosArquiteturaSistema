@@ -7,7 +7,7 @@ import at1.*;
 
 public class DispositivoController {
     private static final Scanner sc = new Scanner(System.in);
-    private static final ArrayList<Dispositivo> listaDispositivos = new ArrayList<>();
+    public static final ArrayList<Dispositivo> listaDispositivos = new ArrayList<>();
 
     private static String lerTexto(String mensagem) {
         System.out.println(mensagem);
@@ -57,10 +57,10 @@ public class DispositivoController {
         System.out.println("==========================================");
         System.out.println("");
 
-        if(tipoImpressora == "1"){
+        if(tipoImpressora.equals("1")){
             listaDispositivos.add(new ImpressoraJato(nome, fabricante, codigo, velocidadeImpressao,tipoImpressora));
 
-        }else if(tipoImpressora == "2"){
+        }else if(tipoImpressora.equals("2")){
             listaDispositivos.add(new ImpressoraLaser(nome, fabricante, codigo, velocidadeImpressao, tipoImpressora));
         }
 
